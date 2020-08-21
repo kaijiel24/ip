@@ -27,6 +27,15 @@ public class Duke {
         printDashLine();
     }
 
+    // Print list of tasks
+    public static void printList(String[] tasks, int taskCount){
+        printDashLine();
+        for (int i = 0; i <  taskCount; ++i){
+            System.out.println(i+1 + ". " + tasks[i]);
+        }
+        printDashLine();
+    }
+
     public static void main(String[] args) {
         // Greets user
         printGreeting();
@@ -35,15 +44,34 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
 
+        // Create array to hold the list of tasks
+        // taskCount keeps track of number of tasks
+        String[] tasks = new String[100];
+        int taskCount = 0;
+
+
         // Get the first input from user
         printPrompt();
         line = in.nextLine();
 
-        // While the input is not "bye", print out the input and get another input
+        // While the input is not "bye", add input to array of tasks and get another input
         while (!line.equals("bye")){
-            printDashLine();
-            System.out.println(line);
-            printDashLine();
+
+            // If input is "list", print the list of tasks
+            if(line.equals("list")){
+                printList(tasks, taskCount);
+            } else {
+                // Else, add line to array of tasks and increase the task count
+                tasks[taskCount] = line;
+                taskCount = taskCount + 1;
+
+                // Acknowledge input
+                printDashLine();
+                System.out.println("added: " + line);
+                printDashLine();
+            }
+
+            // Get another input
             printPrompt();
             line = in.nextLine();
         }
