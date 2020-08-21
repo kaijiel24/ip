@@ -21,18 +21,9 @@ public class Duke {
     }
 
     // Prints the exit statement
-    public static void printExitLine(){
+    public static void printExitLine() {
         printDashLine();
         System.out.println("Bye. Hope to see you again soon!");
-        printDashLine();
-    }
-
-    // Print list of tasks
-    public static void printList(String[] tasks, int taskCount){
-        printDashLine();
-        for (int i = 0; i <  taskCount; ++i){
-            System.out.println(i+1 + ". " + tasks[i]);
-        }
         printDashLine();
     }
 
@@ -44,11 +35,8 @@ public class Duke {
         String line;
         Scanner in = new Scanner(System.in);
 
-        // Create array to hold the list of tasks
-        // taskCount keeps track of number of tasks
-        String[] tasks = new String[100];
-        int taskCount = 0;
-
+        // Initialize an instance of class Task to keep track of tasks
+        Task taskList = new Task();
 
         // Get the first input from user
         printPrompt();
@@ -58,12 +46,27 @@ public class Duke {
         while (!line.equals("bye")){
 
             // If input is "list", print the list of tasks
-            if(line.equals("list")){
-                printList(tasks, taskCount);
+            if(line.equals("list")) {
+                printDashLine();
+                taskList.printList();
+                printDashLine();
+            } else if (line.matches("^done \\d+")){
+                // Else if the line is done followed by number
+                // separate the done from the number
+                String[] lineSplit = line.split(" ");
+                int index = Integer.parseInt(lineSplit[1]);
+
+                // Mark the index as done
+                taskList.markAsDone(index);
+
+                // Acknowledge task is done
+                printDashLine();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  [✓] " + taskList.getTask(index));
+                printDashLine();
             } else {
-                // Else, add line to array of tasks and increase the task count
-                tasks[taskCount] = line;
-                taskCount = taskCount + 1;
+                // Else add the input to new list
+                taskList.addTask(line);
 
                 // Acknowledge input
                 printDashLine();
