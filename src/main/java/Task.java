@@ -1,10 +1,10 @@
 public class Task {
-    private final String description;
-    private boolean isDone;
+    protected final String description;
+    protected boolean isDone;
 
     public Task(String description){
         this.description = description;
-        this.isDone = false;
+        isDone = false;
     }
 
     public String getDescription() {
@@ -12,11 +12,16 @@ public class Task {
     }
 
     public boolean isDone() {
-        return this.isDone;
+        return isDone;
     }
 
     // Mark a task as done based on the index
     public void markAsDone(){
         isDone = true;
+    }
+
+    // Prints task
+    public void printTask(){
+        System.out.println(description);
     }
 }
