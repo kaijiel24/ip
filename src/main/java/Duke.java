@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
+
     // Lines to be printed
     public static final String[] GREETING_LINES = {
             "Hello! I'm Duke",
@@ -9,18 +10,22 @@ public class Duke {
             "Bye. Hope to see you again soon!";
     public static final String TASK_DONE_LINE =
             "Nice! I've marked this task as done:\n  ";
-    public static final String LIST_INTRO_LINE = "Here are the tasks in your list";
-    public static final String NOT_RECOGNISED_LINE = "Oh no! Command not recognised";
-    public static final String[] DONE_FORMAT_LINES = {
-            ":( Oh no! Done must follow the format: done <index>,\n",
-            "  and <index> not greater than the number of objects"
-    };
-    public static final String OUT_OF_RANGE_LINE = ":( Oh no! The index given is out of the range of the number of tasks.";
-    public static final String COMPLETED_LINE = ":( Oh no! The task has already been completed.";
-    public static final String TODO_LINE = ":( Oh no! Description of todo cannot be empty";
-    public static final String DEADLINE_LINE = ":( Oh no! Deadline must follow the format <description> /by <time/date> ";
-    public static final String EVENT_LINE = ":( Oh no! Event must follow the format <description> /at <time/date> ";
-
+    public static final String LIST_INTRO_LINE =
+            "Here are the tasks in your list";
+    public static final String NOT_RECOGNISED_LINE =
+            ":( Oh no! Command not recognised";
+    public static final String DONE_FORMAT_LINE =
+            ":( Oh no! Done must follow the format: done <index>";
+    public static final String OUT_OF_RANGE_LINE =
+            ":( Oh no! The index given is out of the range of the number of tasks.";
+    public static final String COMPLETED_LINE =
+            ":( Oh no! The task has already been completed.";
+    public static final String TODO_LINE =
+            ":( Oh no! Description of todo cannot be empty";
+    public static final String DEADLINE_LINE =
+            ":( Oh no! Deadline must follow the format <description> /by <time/date> ";
+    public static final String EVENT_LINE =
+            ":( Oh no! Event must follow the format <description> /at <time/date> ";
 
     // Commands Constant
     public static final String BYE = "bye";
@@ -46,7 +51,8 @@ public class Duke {
 
     // Prints a horizontal dash line
     public static void printDashLine(){
-        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("--------------------------------"
+                + "---------------------------------------");
     }
 
     public static void printOneLine(String line){
@@ -89,28 +95,28 @@ public class Duke {
     }
 
     // Adding a Todo to list of tasks
-    public static void addTodo(String line) throws TodoException{
+    public static void addTodo(String userInput) throws TodoException{
 
-        if (line.equals("todo") || line.equals("")){
+        if (userInput.equals("todo") || userInput.equals("")){
             throw new TodoException();
         }
         // Create new Todo instance an add it to end taskList
-        taskList[taskCount] = new Todo (line);
+        taskList[taskCount] = new Todo (userInput);
         taskCount = taskCount + 1;
 
         printAcknowledgement();
     }
 
     // Adding a Deadline to list of tasks
-    public static void addDeadline(String line) throws DeadlineException {
+    public static void addDeadline(String userInput) throws DeadlineException {
         // Check if line follows the format "<description> /by <time/date>"
-        if (!line.matches(DEADLINE_REGEX)){
+        if (!userInput.matches(DEADLINE_REGEX)){
             throw new DeadlineException();
         }
 
         // get description and by from line
-        String description = line.replaceAll(GET_DESCRIPTION_REGEX, "");
-        String by = line.replaceAll(GET_BY_REGEX, "");
+        String description = userInput.replaceAll(GET_DESCRIPTION_REGEX, "");
+        String by = userInput.replaceAll(GET_BY_REGEX, "");
 
         // Create new Deadline instance an add it to end taskList
         taskList[taskCount] = new Deadline (description, by);
@@ -120,15 +126,15 @@ public class Duke {
     }
 
     // Adding an Event to list of tasks
-    public static void addEvent(String line) throws EventException{
-        // Check if line follows the format "<description> /at <time/date>"
-        if (!line.matches(EVENT_REGEX)){
+    public static void addEvent(String userInput) throws EventException{
+        // Check if userInput follows the format "<description> /at <time/date>"
+        if (!userInput.matches(EVENT_REGEX)){
             throw new EventException();
         }
 
-        // get description and by from line
-        String description = line.replaceAll(GET_DESCRIPTION_REGEX, "");
-        String at = line.replaceAll(GET_AT_REGEX, "");
+        // get description and by from userInput
+        String description = userInput.replaceAll(GET_DESCRIPTION_REGEX, "");
+        String at = userInput.replaceAll(GET_AT_REGEX, "");
 
         // Create new Event instance an add it to end taskList
         taskList[taskCount] = new Event (description, at);
@@ -149,24 +155,24 @@ public class Duke {
 
         // Add each item to listLines
         for (int i = 1; i <= taskCount; ++i) {
-            listLines[i] = Integer.toString(i) + ". " + taskList[i-1].showTask();
+            listLines[i] = i + ". " + taskList[i-1].showTask();
         }
 
         printMultiLine(listLines);
     }
 
     // Mark the task at the given index as done
-    public static void markAsDone(String line)
+    public static void markAsDone(String userInput)
             throws DoneFormatException, DoneAlreadyException, DoneRangeException{
 
         // Check if the command is done and is followed by a number
         // and if the index is within the range of number of tasks
-        if (!line.matches(DIGITS_REGEX)){
+        if (!userInput.matches(DIGITS_REGEX)){
             throw new DoneFormatException();
         }
 
-        int index = Integer.parseInt(line) - 1;
-        if (index > taskCount){
+        int index = Integer.parseInt(userInput) - 1;
+        if (index >= taskCount){
             throw new DoneRangeException();
         }
         // Check if task is already done
@@ -202,7 +208,7 @@ public class Duke {
             try{
                 markAsDone(userInput);
             } catch (DoneFormatException e) {
-                printMultiLine(DONE_FORMAT_LINES);
+                printOneLine(DONE_FORMAT_LINE);
             } catch (DoneRangeException e){
                 printOneLine(OUT_OF_RANGE_LINE);
             } catch (DoneAlreadyException e){
