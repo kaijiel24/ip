@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.File;
 import java.nio.file.Files;
@@ -281,24 +279,25 @@ public class Duke {
     // Delete task
     public static void deleteTask(String userInput)
             throws DeleteFormatException, DeleteRangeException{
+
+        if (!userInput.matches(DIGITS_REGEX)){
+            throw new DeleteFormatException();
+        }
+
         int index = Integer.parseInt(userInput) - 1;
 
         if (index >= taskList.size()) {
             throw new DeleteRangeException();
         }
 
-        // Check if the command is done and is followed by a number
-        // and if the index is within the range of number of tasks
-        if (!userInput.matches(DIGITS_REGEX)){
-            throw new DeleteFormatException();
-        }
 
         printAcknowledgement(TASK_DELETED_LINE, index);
 
-            taskList.remove(index);
+        taskList.remove(index);
 
-            printNumOfTask();
-        }
+        printNumOfTask();
+        writeToFile();
+    }
 
 
 

@@ -15,4 +15,8 @@ event fly kite /at 2345
 list
 done 4
 list
+delete swimming
+delete 5
+delete 3
+list
 bye
