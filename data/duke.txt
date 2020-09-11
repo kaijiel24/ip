@@ -1,0 +1,6 @@
+T | 0 | pack bag
+T | 1 | clean room
+T | 1 | eat
+E | 1 | training | school field
+D | 0 | CS2113 IP | day before tutorial
+E | 0 | cny party  | Jon's place
