@@ -1,6 +1,13 @@
 import java.util.Scanner;
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.IOException;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 
 public class Duke {
 
@@ -10,6 +17,8 @@ public class Duke {
             "What can I do for you?"};
     public static final String BYE_LINE =
             "Bye. Hope to see you again soon!";
+    public static final String EMPTY_LIST_LINE =
+            "List is empty.";
     public static final String TASK_DONE_LINE =
             "Nice! I've marked this task as done:\n  ";
     public static final String LIST_INTRO_LINE =
@@ -46,9 +55,89 @@ public class Duke {
     public static final String DIGITS_REGEX = "\\d+";
     public static final String DEADLINE_REGEX = ".+/by.+";
     public static final String EVENT_REGEX = ".+/at.+";
+    public static final String DUKE_TXT = "data/duke.txt";
 
     // Task variables
     public static ArrayList<Task> taskList= new ArrayList<>();
+
+    // Data file variable
+    public static File f = new File(DUKE_TXT);
+
+    public static void loadData()
+            throws FileNotFoundException, FileFormatException{
+
+        Scanner s = new Scanner(f);
+        while (s.hasNext()){
+            String entry = s.nextLine();
+//            System.out.println(entry);
+
+            // Check if entry is in the correct format
+            if(!entry.matches("T\\s\\|\\s[01]\\s\\|.+")
+                && !entry.matches("[ED]\\s\\|\\s[01]\\s\\|.+\\|.+")) {
+                throw new FileFormatException();
+            }
+
+            String[] entrySplit= entry.split("\\s\\|\\s");
+//            System.out.println(Arrays.toString(entrySplit));
+            String taskType = entrySplit[0];
+            boolean isDone = entrySplit[1].equals("1");
+            String description = entrySplit[2];
+            String atBy = entrySplit.length >= 4 ? entrySplit[3] : "";
+
+
+            if (taskType.equals("T")){
+                taskList.add(new Todo(description, isDone));
+
+            } else if (taskType.equals("D")){
+                taskList.add(new Deadline(description, isDone, atBy));
+
+            } else {
+                taskList.add(new Event(description, isDone, atBy));
+
+            }
+        }
+    }
+
+    public static void createFile() throws IOException{
+        Path pathToFile = Paths.get(DUKE_TXT);
+        Files.createDirectories(pathToFile.getParent());
+        f.createNewFile();
+    }
+
+    public static void initialiseTaskList(){
+        try {
+            loadData();
+        } catch (FileNotFoundException e){
+            System.out.println("File not found");
+            try {
+                createFile();
+
+            } catch (IOException e1){
+                System.out.println("Error creating new file");
+            }
+            System.out.println("New file data/duke.txt created");
+
+        } catch (FileFormatException e){
+            System.out.println("File formatting error");
+            taskList.clear();
+        }
+    }
+
+    private static void _writeToFile() throws IOException{
+        FileWriter fw = new FileWriter(DUKE_TXT);
+        for (Task task : taskList){
+            fw.write(task.saveTask() + "\n");
+        }
+        fw.close();
+    }
+
+    public static void writeToFile(){
+        try {
+            _writeToFile();
+        } catch (IOException e) {
+            System.out.println("Error writing to file");
+        }
+    }
 
     // Prints a horizontal dash line
     public static void printDashLine(){
@@ -105,6 +194,9 @@ public class Duke {
         taskList.add(new Todo (userInput));
 
         printAcknowledgement();
+
+        writeToFile();
+
     }
 
     // Adding a Deadline to list of tasks
@@ -122,6 +214,8 @@ public class Duke {
         taskList.add(new Deadline (description, by));
 
         printAcknowledgement();
+
+        writeToFile();
     }
 
     // Adding an Event to list of tasks
@@ -140,6 +234,8 @@ public class Duke {
         taskList.add(new Event (description, at));
 
         printAcknowledgement();
+
+        writeToFile();
     }
 
     public static void addNothing() throws NothingException{
@@ -147,7 +243,10 @@ public class Duke {
     }
 
     // Print list of task
-    public static void printList() {
+    public static void printList() throws EmptyListException{
+        if (taskList.size() == 0){
+            throw new EmptyListException();
+        }
         String[] listLines = new String[taskList.size()+1];
 
         listLines[0] = LIST_INTRO_LINE;
@@ -187,6 +286,7 @@ public class Duke {
                 TASK_DONE_LINE,
                 taskList.get(index).showTask()
         });
+        writeToFile();
     }
 
     // Reads the input of the line to determine the command and run it
@@ -201,7 +301,11 @@ public class Duke {
 
         // Check the command type then execute the commands
         if(userInput.equals(LIST)) {
-            printList();
+            try{
+                printList();
+            } catch (EmptyListException e){
+                printOneLine(EMPTY_LIST_LINE);
+            }
 
         } else if (command.equals(DONE) ){
             try{
@@ -265,6 +369,9 @@ public class Duke {
     }
 
     public static void main(String[] args) {
+        // Initialise taskList from any previous saved file
+        initialiseTaskList();
+
         // Greets user
         printGreeting();
 
