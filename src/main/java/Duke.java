@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -46,8 +47,9 @@ public class Duke {
     public static final String EVENT_REGEX = ".+/at.+";
 
     // Task variables
-    public static Task[] taskList= new Task[100];
-    public static int taskCount = 0;
+//    public static Task[] taskList= new Task[100];
+//    public static int taskCount = 0;
+    public static ArrayList<Task> taskList = new ArrayList<>();
 
     // Prints a horizontal dash line
     public static void printDashLine(){
@@ -88,8 +90,8 @@ public class Duke {
     public static void printAcknowledgement(){
         String[] acknowledgeTaskLines = {
                 "Got it. I've added this task:\n  ",
-                taskList[taskCount-1].showTask(),
-                "Now you have " + taskCount + " tasks in the list"
+                taskList.get(taskList.size()-1).showTask(),
+                "Now you have " + taskList.size() + " tasks in the list"
         };
         printMultiLine(acknowledgeTaskLines);
     }
@@ -101,8 +103,7 @@ public class Duke {
             throw new TodoException();
         }
         // Create new Todo instance an add it to end taskList
-        taskList[taskCount] = new Todo (userInput);
-        taskCount = taskCount + 1;
+        taskList.add(new Todo (userInput));
 
         printAcknowledgement();
     }
@@ -119,8 +120,7 @@ public class Duke {
         String by = userInput.replaceAll(GET_BY_REGEX, "");
 
         // Create new Deadline instance an add it to end taskList
-        taskList[taskCount] = new Deadline (description, by);
-        taskCount = taskCount + 1;
+        taskList.add(new Deadline (description, by));
 
         printAcknowledgement();
     }
@@ -137,8 +137,7 @@ public class Duke {
         String at = userInput.replaceAll(GET_AT_REGEX, "");
 
         // Create new Event instance an add it to end taskList
-        taskList[taskCount] = new Event (description, at);
-        taskCount = taskCount + 1;
+        taskList.add(new Event (description, at));
 
         printAcknowledgement();
     }
@@ -149,13 +148,13 @@ public class Duke {
 
     // Print list of task
     public static void printList() {
-        String[] listLines = new String[taskCount+1];
+        String[] listLines = new String[taskList.size()+1];
 
         listLines[0] = LIST_INTRO_LINE;
 
         // Add each item to listLines
-        for (int i = 1; i <= taskCount; ++i) {
-            listLines[i] = i + ". " + taskList[i-1].showTask();
+        for (int i = 1; i <= taskList.size(); ++i) {
+            listLines[i] = i + ". " + taskList.get(i-1).showTask();
         }
 
         printMultiLine(listLines);
@@ -172,21 +171,21 @@ public class Duke {
         }
 
         int index = Integer.parseInt(userInput) - 1;
-        if (index >= taskCount){
+        if (index >= taskList.size()){
             throw new DoneRangeException();
         }
         // Check if task is already done
-        if (taskList[index].isDone()){
+        if (taskList.get(index).isDone()){
             throw new DoneAlreadyException();
         }
 
         // Mark the index as done
-        taskList[index].markAsDone();
+        taskList.get(index).markAsDone();
 
         // Acknowledge task is done
         printMultiLine(new String[]{
                 TASK_DONE_LINE,
-                taskList[index].showTask()
+                taskList.get(index).showTask()
         });
     }
 
