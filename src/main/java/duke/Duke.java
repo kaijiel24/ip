@@ -1,3 +1,11 @@
+package duke;
+
+import duke.exceptions.*;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.Todo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
@@ -12,7 +20,7 @@ public class Duke {
 
     // Lines to be printed
     public static final String[] GREETING_LINES = {
-            "Hello! I'm Duke",
+            "Hello! I'm duke.Duke",
             "What can I do for you?"};
     public static final String BYE_LINE =
             "Bye. Hope to see you again soon!";
@@ -37,9 +45,9 @@ public class Duke {
     public static final String TODO_LINE =
             ":( Oh no! Description of todo cannot be empty";
     public static final String DEADLINE_LINE =
-            ":( Oh no! Deadline must follow the format <description> /by <time/date> ";
+            ":( Oh no! duke.tasks.Deadline must follow the format <description> /by <time/date> ";
     public static final String EVENT_LINE =
-            ":( Oh no! Event must follow the format <description> /at <time/date> ";
+            ":( Oh no! duke.tasks.Event must follow the format <description> /at <time/date> ";
 
     // Commands Constant
     public static final String BYE = "bye";
@@ -64,7 +72,7 @@ public class Duke {
     // Path to file data/duke.txt
     public static final String DUKE_TXT = "data/duke.txt";
 
-    // Task variables
+    // duke.tasks.Task variables
     public static ArrayList<Task> taskList = new ArrayList<>();
 
 
@@ -216,14 +224,14 @@ public class Duke {
         printMultiLine(acknowledgeTaskLines);
     }
 
-    // Adding a Todo to list of tasks
+    // Adding a duke.tasks.Todo to list of tasks
     public static void addTodo(String userInput) throws TodoException{
 
         if (userInput.equals("todo") || userInput.equals("")){
             throw new TodoException();
         }
-        // Create new Todo instance an add it to end taskList
-        taskList.add(new Todo (userInput));
+        // Create new duke.tasks.Todo instance an add it to end taskList
+        taskList.add(new Todo(userInput));
 
         printAcknowledgement(TASK_ADDED_LINE, taskList.size()-1);
         printNumOfTask();
@@ -231,7 +239,7 @@ public class Duke {
         writeToFile();
     }
 
-    // Adding a Deadline to list of tasks
+    // Adding a duke.tasks.Deadline to list of tasks
     public static void addDeadline(String userInput) throws DeadlineException {
         // Check if line follows the format "<description> /by <time/date>"
         if (!userInput.matches(DEADLINE_REGEX)){
@@ -242,7 +250,7 @@ public class Duke {
         String description = userInput.replaceAll(GET_DESCRIPTION_REGEX, "");
         String by = userInput.replaceAll(GET_BY_REGEX, "");
 
-        // Create new Deadline instance an add it to end taskList
+        // Create new duke.tasks.Deadline instance an add it to end taskList
         taskList.add(new Deadline (description, by));
 
         printAcknowledgement(TASK_ADDED_LINE, taskList.size()-1);
@@ -251,7 +259,7 @@ public class Duke {
         writeToFile();
     }
 
-    // Adding an Event to list of tasks
+    // Adding an duke.tasks.Event to list of tasks
     public static void addEvent(String userInput) throws EventException{
         // Check if userInput follows the format "<description> /at <time/date>"
         if (!userInput.matches(EVENT_REGEX)){
@@ -263,8 +271,8 @@ public class Duke {
         String at = userInput.replaceAll(GET_AT_REGEX, "");
 
 
-        // Create new Event instance an add it to end taskList
-        taskList.add(new Event (description, at));
+        // Create new duke.tasks.Event instance an add it to end taskList
+        taskList.add(new Event(description, at));
 
         printAcknowledgement(TASK_ADDED_LINE, taskList.size()-1);
         printNumOfTask();
@@ -278,7 +286,7 @@ public class Duke {
 
     // Delete task
     public static void deleteTask(String userInput)
-            throws DeleteFormatException, DeleteRangeException{
+            throws DeleteFormatException, DeleteRangeException {
 
         if (!userInput.matches(DIGITS_REGEX)){
             throw new DeleteFormatException();
@@ -425,7 +433,7 @@ public class Duke {
         // Greets user
         printGreeting();
 
-        // Run Duke until it exits
+        // Run duke.Duke until it exits
         runDuke();
 
         // When the input is BYE and we exit from the loop, print exit line

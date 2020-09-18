@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
-Hello! I'm Duke
+Hello! I'm duke.Duke
 What can I do for you?
 -----------------------------------------------------------------------
   > -----------------------------------------------------------------------
@@ -9,10 +9,10 @@ What can I do for you?
 :( Oh no! Description of todo cannot be empty
 -----------------------------------------------------------------------
   > -----------------------------------------------------------------------
-:( Oh no! Event must follow the format <description> /at <time/date>
+:( Oh no! duke.tasks.Event must follow the format <description> /at <time/date>
 -----------------------------------------------------------------------
   > -----------------------------------------------------------------------
-:( Oh no! Deadline must follow the format <description> /by <time/date>
+:( Oh no! duke.tasks.Deadline must follow the format <description> /by <time/date>
 -----------------------------------------------------------------------
   > -----------------------------------------------------------------------
 Got it. I've added this task:
