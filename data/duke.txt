@@ -1,3 +1,5 @@
 T | 0 | clean room
 E | 0 | CS lecture  | Thurs 1200
 D | 1 | CG submission  | Tues 2359
+T | 1 | clean kitchen
+E | 0 | CS lab  | Fri 1000
