@@ -14,6 +14,7 @@ public class Parser {
     public final String TODO = "todo";
     public final String DEADLINE = "deadline";
     public final String EVENT = "event";
+    public final String FIND = "find";
 
     // Regex Constants
 
@@ -54,6 +55,9 @@ public class Parser {
         }
         if (command.equals(DONE) ) {
             return new MarkAsDoneCommand(taskList, arguments);
+        }
+        if (command.equals(FIND)){
+            return new FindCommand(taskList, arguments);
         }
         return new EmptyCommand(taskList);
     }

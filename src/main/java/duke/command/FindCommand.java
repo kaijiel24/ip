@@ -2,15 +2,15 @@ package duke.command;
 
 import duke.tasks.TaskList;
 
-public class ListCommand extends Command{
+public class FindCommand extends Command {
 
-    public ListCommand(TaskList taskList){
-        super(taskList, "");
+    public FindCommand(TaskList taskList, String arguments){
+        super(taskList, arguments);
     }
 
     @Override
     public CommandResult execute() throws Exception{
-        String message = taskList.getList();
+        String message = taskList.findTask(arguments);
 
         return new CommandResult(message, false);
     }
