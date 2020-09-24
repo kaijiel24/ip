@@ -9,12 +9,14 @@ public class Parser {
 
     // Commands Constant
     public final String BYE = "bye";
-    private final String LIST = "list";
-    private final String DONE = "done";
-    private final String DELETE = "delete";
-    private final String TODO = "todo";
-    private final String DEADLINE = "deadline";
-    private final String EVENT = "event";
+    public final String LIST = "list";
+    public final String DONE = "done";
+    public final String DELETE = "delete";
+    public final String TODO = "todo";
+    public final String DEADLINE = "deadline";
+    public final String EVENT = "event";
+    public final String FIND = "find";
+
 
     // Regex Constants
 
@@ -59,6 +61,9 @@ public class Parser {
         }
         if (command.equals(DONE) ) {
             return new MarkAsDoneCommand(taskList, arguments);
+        }
+        if (command.equals(FIND)){
+            return new FindCommand(taskList, arguments);
         }
         return new EmptyCommand(taskList);
     }

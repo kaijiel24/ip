@@ -19,7 +19,8 @@ public class TaskList {
             "Noted. I've removed this task:";
     private final String TASK_DONE_LINE =
             "Nice! I've marked this task as done:";
-
+    public final String FIND_INTRO_LINE =
+            "Here are the tasks in your list that contains '";
 
     private final String TODO = "todo";
     private final String GET_DESCRIPTION_REGEX = "/.+";
@@ -175,10 +176,6 @@ public class TaskList {
         return acknowledgement + "\n" + getNumOfTask();
     }
 
-
-
-    // Mark the task at the given index as done
-
     /**
      * Marks a task in the list as done
      *
@@ -207,6 +204,32 @@ public class TaskList {
         tasks.get(index).markAsDone();
 
         return getAcknowledgement(TASK_DONE_LINE, index);
+    }
+
+    /**
+     * Find tasks which have description containing search term
+     *
+     * @param arguments Search term to find within tasks' description
+     * @return a String representing the list of items that contain the search term
+     * @throws NotFoundException
+     */
+    public String findTask(String arguments) throws NotFoundException {
+        String foundList = FIND_INTRO_LINE + arguments + "'";
+
+        int numFound = 0;
+
+        // Add each item to foundList
+        for (int i = 1; i <= tasks.size(); ++i) {
+            if (tasks.get(i - 1).getDescription().toLowerCase().contains(arguments.toLowerCase())) {
+                numFound += 1;
+                foundList = foundList + "\n" + i + ". " + tasks.get(i - 1).showTask();
+            }
+        }
+
+        if (numFound == 0){
+            throw new NotFoundException();
+        }
+        return foundList;
     }
 
     /** Clears the list of task */

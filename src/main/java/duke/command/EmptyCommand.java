@@ -13,6 +13,6 @@ public class EmptyCommand extends Command{
     @Override
     public CommandResult execute() throws Exception {
         taskList.doNothing();
-        return new CommandResult("", false, taskList);
+        return new CommandResult("", false);
     }
 }

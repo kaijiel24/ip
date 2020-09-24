@@ -13,7 +13,13 @@ public class CommandResult {
     private TaskList taskList;
     private boolean updated;
 
-    /** Constructor */
+    /** Constructor without taskList */
+    public CommandResult(String message, boolean updated){
+        this.updated = updated;
+        this.message = message;
+    }
+
+    /** Constructor with taskList */
     public CommandResult(String message, boolean updated, TaskList taskList){
         this.updated = updated;
         this.message = message;

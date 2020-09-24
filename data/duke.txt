@@ -1,5 +1,8 @@
 T | 0 | clean room
 E | 0 | CS lecture  | Thurs 1200
 T | 0 | run
-D | 0 | meeting preperation  | 30/09/2020 1000
+D | 0 | meeting preparation  | 30/09/2020 1000
 E | 1 | CS2113 Tutorial  | 02/10/2020 1200
+D | 1 | CG submission  | Tues 2359
+T | 1 | clean kitchen
+E | 0 | CS lab  | Fri 1000
