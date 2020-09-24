@@ -1,8 +1,12 @@
 package duke.exceptions;
 
+/**
+ * Used when DeadlineCommand does not follow the format:
+ *      deadline [description] /by [time/date]
+ */
 public class DeadlineException extends Exception {
-    public final String DEADLINE_LINE =
-            ":( Oh no! Deadline must follow the format <description> /by <time/date> ";
+    private final String DEADLINE_LINE =
+            ":( Oh no! Deadline must follow the format: deadline <description> /by <time/date> ";
 
     @Override
     public String getMessage(){

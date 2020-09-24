@@ -1,7 +1,8 @@
 package duke.exceptions;
 
+/** Used when commands are not recognised */
 public class NothingException extends Exception {
-    public final String NOT_RECOGNISED_LINE =
+    private final String NOT_RECOGNISED_LINE =
             ":( Oh no! Command not recognised";
 
     @Override

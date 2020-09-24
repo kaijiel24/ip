@@ -1,7 +1,11 @@
 package duke.exceptions;
 
+/**
+ * Used when DoneCommand does not follow the format:
+ *      done [index]
+ */
 public class DoneFormatException extends Exception{
-    public final String DONE_FORMAT_LINE =
+    private final String DONE_FORMAT_LINE =
             ":( Oh no! Done must follow the format: done <index>";
 
     @Override

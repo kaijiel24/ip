@@ -1,7 +1,8 @@
 package duke.exceptions;
 
+/** Used when list to be shown is empty */
 public class EmptyListException extends Exception {
-    public final String EMPTY_LIST_LINE =
+    private final String EMPTY_LIST_LINE =
             ":( Oh no! List is empty.";
 
     @Override

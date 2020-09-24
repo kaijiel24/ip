@@ -1,7 +1,11 @@
 package duke.exceptions;
 
+/**
+ * Used when DeleteCommand does not follow the format:
+ *      delete [index]
+ */
 public class DeleteFormatException extends Exception{
-    public final String DELETED_FORMAT_LINE =
+    private final String DELETED_FORMAT_LINE =
             ":( Oh no! Delete must follow the format: delete <index>";
 
     @Override
