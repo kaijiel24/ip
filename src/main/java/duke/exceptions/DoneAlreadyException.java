@@ -1,9 +1,8 @@
 package duke.exceptions;
 
-import java.util.concurrent.CompletableFuture;
-
+/** Used when task in MarkAsDoneCommand is already completed */
 public class DoneAlreadyException extends Exception {
-    public final String COMPLETED_LINE =
+    private final String COMPLETED_LINE =
             ":( Oh no! The task has already been completed.";
 
     @Override

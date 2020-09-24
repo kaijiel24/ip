@@ -1,22 +1,37 @@
-package duke;
+package duke.ui;
 
+import java.util.Scanner;
+
+/** Displays messages to user */
 public class Ui {
 
-    // Lines to be printed
-    public final String GREETING_LINES =
+    private final String GREETING_LINES =
             "Hello! I'm duke.Duke" + "\n"
             + "What can I do for you?";
-    public final String BYE_LINE =
+    private final String BYE_LINE =
             "Bye. Hope to see you again soon!";
 
+    private Scanner in;
 
-    // Prints a horizontal dash line
-    public void printDashLine(){
+    /** Constructor */
+    public Ui(){
+        in = new Scanner(System.in);
+    }
+
+    /**
+     * Reads user input from command line
+     * @return String containing userInput
+     */
+    public String readUserInput(){
+        return in.nextLine();
+    }
+
+    private void printDashLine(){
         System.out.println("--------------------------------"
                 + "---------------------------------------");
     }
 
-    public void printOneLine(String line){
+    private void printOneLine(String line){
         if (line.isEmpty()){
             return;
         }
@@ -25,20 +40,26 @@ public class Ui {
         printDashLine();
     }
 
+    /** Displays the prompt for user input */
     public void printPrompt(){
         System.out.print("  > ");
     }
 
-    // Prints the greet statement
+    /** Displays the greeting message */
     public void printGreeting(){
         printOneLine(GREETING_LINES);
     }
 
-    // Prints the exit statement
+    /** Displays the exit message */
     public void printExitLine() {
         printOneLine(BYE_LINE);
     }
 
+    /**
+     * Displays the message
+     *
+     * @param message message to be displayed to suer
+     */
     public void printMessage(String message) {
         printOneLine(message);
     }

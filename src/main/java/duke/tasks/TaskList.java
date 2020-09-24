@@ -4,40 +4,63 @@ import duke.exceptions.*;
 
 import java.util.ArrayList;
 
-public class TaskList {// duke.tasks.Task variables
+/**
+ * Represents a list of Task
+ * The ArrayList of Task <code>tasks</code> represents the list of all the tasks available
+ */
+public class TaskList {
     public ArrayList<Task> tasks = new ArrayList<>();
 
-    public final String LIST_INTRO_LINE =
+    private final String LIST_INTRO_LINE =
             "Here are the tasks in your list:";
-    public final String TASK_ADDED_LINE =
+    private final String TASK_ADDED_LINE =
             "Got it. I've added this task:";
-    public final String TASK_DELETED_LINE =
+    private final String TASK_DELETED_LINE =
             "Noted. I've removed this task:";
-    public final String TASK_DONE_LINE =
+    private final String TASK_DONE_LINE =
             "Nice! I've marked this task as done:";
     public final String FIND_INTRO_LINE =
             "Here are the tasks in your list that contains '";
 
-    public final String GET_DESCRIPTION_REGEX = "/.+";
-    public final String GET_AT_REGEX = ".+/at ";
-    public final String GET_BY_REGEX = ".+/by ";
-    public final String DIGITS_REGEX = "\\d+";
-    public final String DEADLINE_REGEX = ".+/by.+";
-    public final String EVENT_REGEX = ".+/at.+";
+    private final String TODO = "todo";
+    private final String GET_DESCRIPTION_REGEX = "/.+";
+    private final String GET_AT_REGEX = ".+/at ";
+    private final String GET_BY_REGEX = ".+/by ";
+    private final String DIGITS_REGEX = "\\d+";
+    private final String DEADLINE_REGEX = ".+/by.+";
+    private final String EVENT_REGEX = ".+/at.+";
 
+    /** Constructor */
     public TaskList() {
     }
 
-    // Print acknowledgement of task added/ deleted depending on line
+    /**
+     * Gets acknowledgement of task added/ deleted depending on line
+     *
+     * @param line Message that a task has been successfully added/ deleted
+     * @param index Index of the task that was added/ deleted
+     * @return a String representing an acknowledgement message
+     */
     public String getAcknowledgement(String line, int index){
         return line + "\n  " + tasks.get(index).showTask();
     }
-    // Print number of tasks left
+
+    /**
+     * Gets the current number of tasks in a list
+     *
+     * @return a String representing a message about then current number of tasks in the list
+     */
     public String getNumOfTask() {
         return "Now you have " + tasks.size() + " tasks in the list";
     }
 
-    // Print list of task
+
+    /**
+     * Gets the list of tasks
+     *
+     * @return a String representing a message about the list of tasks
+     * @throws EmptyListException If list.size() == 0
+     */
     public String getList() throws EmptyListException {
         if (tasks.size() == 0) {
             throw new EmptyListException();
@@ -52,61 +75,87 @@ public class TaskList {// duke.tasks.Task variables
         return fullList;
     }
 
-    // Adding a duke.tasks.Todo to list of tasks
+    /**
+     * Adds a Todo task to the list
+     *
+     * @param arguments Arguments of the user's input
+     * @return a String representing the full message to return to user in the case of a successful addition
+     * @throws TodoException when the task description is empty
+     */
     public String addTodo(String arguments) throws TodoException {
 
-        if (arguments.equals("todo") || arguments.equals("")){
+        if (arguments.equals(TODO) || arguments.equals("")){
             throw new TodoException();
         }
-        // Create new duke.tasks.Todo instance an add it to end taskList
         tasks.add(new Todo(arguments));
 
         return getAcknowledgement(TASK_ADDED_LINE, tasks.size()-1)
             + "\n" + getNumOfTask();
     }
 
-    // Adding a duke.tasks.Deadline to list of tasks
+    /**
+     * Adds a Deadline task to the list
+     *
+     * @param arguments Arguments of the user's input
+     * @return a String representing the full message to return to user in the case of a successful addition
+     * @throws DeadlineException when the arguments do not follow the format of
+     *      description /by time/date
+     */
     public String addDeadline(String arguments) throws DeadlineException {
-        // Check if line follows the format "<description> /by <time/date>"
         if (!arguments.matches(DEADLINE_REGEX)){
             throw new DeadlineException();
         }
 
-        // get description and by from line
         String description = arguments.replaceAll(GET_DESCRIPTION_REGEX, "");
         String by = arguments.replaceAll(GET_BY_REGEX, "");
 
-        // Create new duke.tasks.Deadline instance an add it to end taskList
         tasks.add(new Deadline(description, by));
 
         return getAcknowledgement(TASK_ADDED_LINE, tasks.size()-1)
                 + "\n" + getNumOfTask();
     }
 
-    // Adding an duke.tasks.Event to list of tasks
+    /**
+     * Adds a Event task to the list
+     *
+     * @param arguments Arguments of the user's input
+     * @return a String representing the full message to return to user in the case of a successful addition
+     * @throws EventException when the arguments do not follow the format of
+     *      description /at time/date
+     */
     public String addEvent(String arguments) throws EventException {
-        // Check if arguments follows the format "<description> /at <time/date>"
         if (!arguments.matches(EVENT_REGEX)){
             throw new EventException();
         }
 
-        // get description and by from arguments
         String description = arguments.replaceAll(GET_DESCRIPTION_REGEX, "");
         String at = arguments.replaceAll(GET_AT_REGEX, "");
 
 
-        // Create new duke.tasks.Event instance an add it to end taskList
         tasks.add(new Event(description, at));
 
         return getAcknowledgement(TASK_ADDED_LINE, tasks.size()-1)
                 + "\n" + getNumOfTask();
     }
 
+    /**
+     * Does nothing other than throw exception. Used in cases where command not recognised
+     *
+     * @throws NothingException when command not recognised
+     */
     public void doNothing () throws NothingException {
         throw new NothingException();
     }
 
-    // Delete task
+    /**
+     * Deletes a task from the list
+     *
+     * @param arguments Arguments of the user's input
+     * @return a String representing the full message to return to user in the case of a successful deletion
+     * @throws DeleteFormatException when the arguments do not follow the format of a single integer
+     * @throws DeleteRangeException when the integer from the argument is not within the range of the
+     *      number of tasks in the list
+     */
     public String deleteTask(String arguments)
             throws DeleteFormatException, DeleteRangeException {
 
@@ -120,7 +169,6 @@ public class TaskList {// duke.tasks.Task variables
             throw new DeleteRangeException();
         }
 
-
         String acknowledgement = getAcknowledgement(TASK_DELETED_LINE, index);
 
         tasks.remove(index);
@@ -128,14 +176,19 @@ public class TaskList {// duke.tasks.Task variables
         return acknowledgement + "\n" + getNumOfTask();
     }
 
-
-
-    // Mark the task at the given index as done
+    /**
+     * Marks a task in the list as done
+     *
+     * @param arguments Arguments of the user's input
+     * @return a String representing the full message to return to user in the case where the task is
+     *      successfully marked as done
+     * @throws DoneFormatException when the arguments do not follow the format of a single integer
+     * @throws DoneRangeException when the integer from the argument is not within the range of the
+     * @throws DoneAlreadyException when the task specified has already been previously marked as done
+     */
     public String markAsDone(String arguments)
             throws DoneFormatException, DoneAlreadyException, DoneRangeException{
 
-        // Check if the command is done and is followed by a number
-        // and if the index is within the range of number of tasks
         if (!arguments.matches(DIGITS_REGEX)){
             throw new DoneFormatException();
         }
@@ -144,20 +197,22 @@ public class TaskList {// duke.tasks.Task variables
         if (index >= tasks.size()){
             throw new DoneRangeException();
         }
-        // Check if task is already done
         if (tasks.get(index).isDone()){
             throw new DoneAlreadyException();
         }
 
-        // Mark the index as done
         tasks.get(index).markAsDone();
 
-        // Acknowledge task is done
         return getAcknowledgement(TASK_DONE_LINE, index);
-
     }
 
-    // Print list of task
+    /**
+     * Find tasks which have description containing search term
+     *
+     * @param arguments Search term to find within tasks' description
+     * @return a String representing the list of items that contain the search term
+     * @throws NotFoundException
+     */
     public String findTask(String arguments) throws NotFoundException {
         String foundList = FIND_INTRO_LINE + arguments + "'";
 
@@ -177,6 +232,7 @@ public class TaskList {// duke.tasks.Task variables
         return foundList;
     }
 
+    /** Clears the list of task */
     public void clearList(){
         tasks.clear();
     }

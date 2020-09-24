@@ -1,9 +1,10 @@
-package duke;
+package duke.parser;
 
 import duke.command.*;
 import duke.tasks.TaskList;
 import duke.tasks.TaskType;
 
+/** Parses user commands */
 public class Parser {
 
     // Commands Constant
@@ -16,27 +17,32 @@ public class Parser {
     public final String EVENT = "event";
     public final String FIND = "find";
 
+
     // Regex Constants
 
-    public final String SPACE_REGEX = "\\s";
-    public final String START_LINE_REGEX = "^";
+    private final String SPACE_REGEX = "\\s";
+    private final String START_LINE_REGEX = "^";
 
 
+    /** Constructor */
     public Parser(){
     }
 
 
-    // Reads the input of the line to determine the command and run it
+    /**
+     * Parses userInput and returns a command to be executed
+     *
+     * @param taskList List of task to execute command on
+     * @param userInput Input from the user to determin command
+     * @return Command to be executed
+     */
     public Command parseCommand(TaskList taskList, String userInput){
 
-        // Get command from the userInput
         final String[] splitLine = userInput.split(" ", 2);
         final String command = splitLine[0];
 
-        // Remove command from userInput
         final String arguments = userInput.replaceAll(START_LINE_REGEX + command + SPACE_REGEX, "");
 
-        // Check the command type then execute the commands
         if(arguments.equals(LIST)) {
             return new ListCommand(taskList);
         }
