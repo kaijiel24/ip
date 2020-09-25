@@ -6,10 +6,12 @@ import java.util.Scanner;
 public class Ui {
 
     private final String GREETING_LINES =
-            "Hello! I'm duke.Duke" + "\n"
+            "Hello! I'm Duke" + "\n"
             + "What can I do for you?";
     private final String BYE_LINE =
             "Bye. Hope to see you again soon!";
+
+    private final int MAX_LINE_LENGTH = 60;
 
     private Scanner in;
 
@@ -27,14 +29,14 @@ public class Ui {
     }
 
     private void printDashLine(){
-        System.out.println("--------------------------------"
-                + "---------------------------------------");
+        System.out.println("------------------------------------------------------------");
     }
 
     private void printOneLine(String line){
         if (line.isEmpty()){
             return;
         }
+
         printDashLine();
         System.out.println(line);
         printDashLine();

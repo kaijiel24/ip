@@ -24,7 +24,8 @@ more important task.
 ### Mark a task as done
 Mark tasks which are already completed as done so that you can keep track of what else needs to be done
 
-
+### Find tasks from list containing certain terms
+Find tasks from list whose description contains the *search term*. This function is not case specific.
 
 
 ## Usage
@@ -40,12 +41,12 @@ Example of usage:
 Expected outcome:
 
 ```
------------------------------------------------------------------------
+------------------------------------------------------------
 Here are the tasks in your list:
 1. [T][✘] clean room
 2. [E][✘] CS lecture  (at: Thurs 1200)
 3. [D][✓] CG submission  (by: Tues 2359)
------------------------------------------------------------------------
+------------------------------------------------------------
 ```
 
 ### `todo` - Adds a new Todo task
@@ -58,11 +59,11 @@ Example of usage:
 
 Expected outcome:
 ```
------------------------------------------------------------------------
+------------------------------------------------------------
 Got it. I've added this task:
   [T][✘] run
 Now you have 4 tasks in the list
------------------------------------------------------------------------
+------------------------------------------------------------
 ```
 
 ### `deadline` - Adds a new Deadline task 
@@ -75,11 +76,11 @@ Example of usage:
 Expected outcome:
 
 ```
------------------------------------------------------------------------
+------------------------------------------------------------
 Got it. I've added this task:
   [D][✘] meeting preperation  (by: 30/09/2020 1000)
 Now you have 5 tasks in the list
------------------------------------------------------------------------
+------------------------------------------------------------
 ```
 
 ### `event` - Adds a new Event task
@@ -91,11 +92,11 @@ Example of usage:
 
 Expected outcome:
 ```
------------------------------------------------------------------------
+------------------------------------------------------------
 Got it. I've added this task:
   [E][✘] CS2113 Tutorial  (at: 02/10/2020 1200)
 Now you have 6 tasks in the list
------------------------------------------------------------------------
+------------------------------------------------------------
 ```
 ### `delete` - Deletes a task from the list
 
@@ -106,11 +107,11 @@ Example of usage:
 
 Expected outcome:
 ```
------------------------------------------------------------------------
+------------------------------------------------------------
 Noted. I've removed this task:
   [D][✓] CG submission  (by: Tues 2359)
 Now you have 5 tasks in the list
------------------------------------------------------------------------
+------------------------------------------------------------
 ```
 
 
@@ -123,11 +124,29 @@ Example of usage:
 
 Expected outcome:
 ```
------------------------------------------------------------------------
+------------------------------------------------------------
 Nice! I've marked this task as done:
   [E][✓] CS2113 Tutorial  (at: 02/10/2020 1200)
------------------------------------------------------------------------
+------------------------------------------------------------
 ```
+
+### `find` - Find tasks from list
+
+Finds task from list whose description matches the search term
+
+Example of usage:
+`find cs`
+
+Expected outcome:
+```
+------------------------------------------------------------
+Here are the tasks in your list that contains 'cs'
+2. [E][✘] CS lecture  (at: Thurs 1200)
+5. [E][✓] CS2113 Tutorial  (at: 02/10/2020 1200)
+8. [E][✘] CS lab  (at: Fri 1000)
+------------------------------------------------------------
+```
+
 
 
 
