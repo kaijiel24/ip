@@ -1,6 +1,16 @@
 package duke.tasks;
 
-import duke.exceptions.*;
+import duke.exceptions.DeadlineException;
+import duke.exceptions.DeleteFormatException;
+import duke.exceptions.DeleteRangeException;
+import duke.exceptions.DoneAlreadyException;
+import duke.exceptions.DoneFormatException;
+import duke.exceptions.DoneRangeException;
+import duke.exceptions.EmptyListException;
+import duke.exceptions.EventException;
+import duke.exceptions.NotFoundException;
+import duke.exceptions.NothingException;
+import duke.exceptions.TodoException;
 
 import java.util.ArrayList;
 
@@ -16,13 +26,12 @@ public class TaskList {
     private final String TASK_ADDED_LINE =
             "Got it. I've added this task:";
     private final String TASK_DELETED_LINE =
-            "Noted. I've removed this task:";
+            "Got it. I've removed this task:";
     private final String TASK_DONE_LINE =
             "Nice! I've marked this task as done:";
     public final String FIND_INTRO_LINE =
             "Here are the tasks in your list that contains '";
 
-    private final String TODO = "todo";
     private final String GET_DESCRIPTION_REGEX = "/.+";
     private final String GET_AT_REGEX = ".+/at ";
     private final String GET_BY_REGEX = ".+/by ";
@@ -84,7 +93,7 @@ public class TaskList {
      */
     public String addTodo(String arguments) throws TodoException {
 
-        if (arguments.equals(TODO) || arguments.equals("")){
+        if (arguments.equals("")){
             throw new TodoException();
         }
         tasks.add(new Todo(arguments));
@@ -211,7 +220,7 @@ public class TaskList {
      *
      * @param arguments Search term to find within tasks' description
      * @return a String representing the list of items that contain the search term
-     * @throws NotFoundException
+     * @throws NotFoundException when task containg search term is not found
      */
     public String findTask(String arguments) throws NotFoundException {
         String foundList = FIND_INTRO_LINE + arguments + "'";

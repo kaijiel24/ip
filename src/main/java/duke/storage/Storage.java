@@ -1,7 +1,11 @@
 package duke.storage;
 
 import duke.exceptions.EntryFormatError;
-import duke.tasks.*;
+import duke.tasks.Deadline;
+import duke.tasks.Event;
+import duke.tasks.Task;
+import duke.tasks.TaskList;
+import duke.tasks.Todo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,12 +59,15 @@ public class Storage {
                 throw new EntryFormatError();
             }
 
-            String[] entrySplit= entry.split(SPLIT_REGEX);
+            String[] entrySplit= entry.split(SPLIT_REGEX, 4);
             String taskType = entrySplit[0];
             boolean isDone = entrySplit[1].equals("1");
             String description = entrySplit[2];
-            String atBy = entrySplit.length >= 4 ? entrySplit[3] : "";
+            String atBy = "";
 
+            if (entrySplit.length == 4) {
+                atBy = entrySplit[3];
+            }
 
             if (taskType.equals("T")){
                 taskList.tasks.add(new Todo(description, isDone));

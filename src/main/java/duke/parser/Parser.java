@@ -1,6 +1,13 @@
 package duke.parser;
 
-import duke.command.*;
+import duke.command.AddCommand;
+import duke.command.Command;
+import duke.command.DeleteCommand;
+import duke.command.EmptyCommand;
+import duke.command.ExitCommand;
+import duke.command.FindCommand;
+import duke.command.ListCommand;
+import duke.command.MarkAsDoneCommand;
 import duke.tasks.TaskList;
 import duke.tasks.TaskType;
 
@@ -17,23 +24,15 @@ public class Parser {
     public final String EVENT = "event";
     public final String FIND = "find";
 
-
-    // Regex Constants
-
-    private final String SPACE_REGEX = "\\s";
-    private final String START_LINE_REGEX = "^";
-
-
     /** Constructor */
     public Parser(){
     }
-
 
     /**
      * Parses userInput and returns a command to be executed
      *
      * @param taskList List of task to execute command on
-     * @param userInput Input from the user to determin command
+     * @param userInput Input from the user to determine command
      * @return Command to be executed
      */
     public Command parseCommand(TaskList taskList, String userInput){
@@ -41,12 +40,18 @@ public class Parser {
         final String[] splitLine = userInput.split(" ", 2);
         final String command = splitLine[0];
 
-        final String arguments = userInput.replaceAll(START_LINE_REGEX + command + SPACE_REGEX, "");
-
-        if(arguments.equals(LIST)) {
-            return new ListCommand(taskList);
+        String arguments = "";
+        if (splitLine.length == 2){
+            arguments = splitLine[1];
         }
 
+        // Solution below adapted from personbook
+        if (command.equals(BYE)){
+            return new ExitCommand(taskList);
+        }
+        if(command.equals(LIST)) {
+            return new ListCommand(taskList);
+        }
         if (command.equals(TODO)){
             return new AddCommand(taskList, arguments, TaskType.TODO);
         }

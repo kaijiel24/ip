@@ -6,7 +6,6 @@ package duke.tasks;
  * String <code>by</code> represents the date or time task should be completed by
  */
 public class Deadline extends Task {
-    private TaskType type = TaskType.DEADLINE;
     private String by;
 
     /** Constructor without isDone */

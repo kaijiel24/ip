@@ -6,8 +6,6 @@ package duke.tasks;
  */
 public class Todo extends Task {
 
-    private TaskType type = TaskType.TODO;
-
     /** Constructor without isDone */
     public Todo (String description){
         super(description);

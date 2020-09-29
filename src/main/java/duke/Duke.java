@@ -2,14 +2,12 @@ package duke;
 
 import duke.command.Command;
 import duke.command.CommandResult;
+import duke.command.ExitCommand;
 import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.storage.StorageResult;
-import duke.tasks.*;
+import duke.tasks.TaskList;
 import duke.ui.Ui;
-
-import java.util.Scanner;
-
 
 /**
  * <h1>Duke</h1>
@@ -21,24 +19,22 @@ import java.util.Scanner;
  */
 public class Duke {
 
-    public static final String DUKE_TXT = "data/duke.txt";
+    private final String DUKE_TXT = "data/duke.txt";
 
     private TaskList taskList;
-    private Storage storage;
-    private Ui ui;
-    private Parser parser;
+    private final Storage storage;
+    private final Ui ui;
+    private final Parser parser;
 
 
     /**
      * Creates a new instance of Ui, Storage and Parser.
      * Initialises the taskList using Storage initialiseTaskList method
      * and prints message from initialisation.
-     *
-     * @param filePath path to file data stored in
      */
-    public Duke(String filePath){
+    public Duke(){
         ui = new Ui();
-        storage = new Storage(filePath);
+        storage = new Storage(DUKE_TXT);
         parser = new Parser();
 
         StorageResult result = storage.initialiseTaskList();
@@ -54,6 +50,7 @@ public class Duke {
      * @return result from executing command
      */
     public CommandResult executeCommand(Command command) {
+        // Solution below adapted from personbook
         try {
             return command.execute();
         } catch (Exception e){
@@ -68,20 +65,18 @@ public class Duke {
      * and run the command. It then writes new taskList to storage if there are any changes
      * and prints the message to for the user
      * The loop is exited when the userInput is "bye"
-     *
-     * @return Nothing.
      */
     public void runDuke(){
         ui.printGreeting();
 
-        String userInput;
+        // Solution below adapted from personbook
+        Command command;
 
-        ui.printPrompt();
-        userInput = ui.readUserInput();
+        do {
+            ui.printPrompt();
+            String userInput = ui.readUserInput();
 
-        while (!userInput.equals(parser.BYE)){
-
-            Command command = parser.parseCommand(taskList, userInput);
+            command = parser.parseCommand(taskList, userInput);
 
             CommandResult commandResult = executeCommand(command);
 
@@ -94,9 +89,7 @@ public class Duke {
 
             ui.printMessage(commandResult.getMessage());
 
-            ui.printPrompt();
-            userInput = ui.readUserInput();
-        }
+        } while (!ExitCommand.isExit(command));
 
         ui.printExitLine();
     }
@@ -107,9 +100,8 @@ public class Duke {
      *      runDuke method.
      *
      * @param args Unused.
-     * @return Nothing.
      */
     public static void main(String[] args) {
-        new Duke(DUKE_TXT).runDuke();
+        new Duke().runDuke();
     }
 }

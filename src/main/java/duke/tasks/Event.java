@@ -6,7 +6,6 @@ package duke.tasks;
  * String <code>by</code> represents the date or time task should be happening at
  */
 public class Event extends Task{
-    private TaskType type = TaskType.EVENT;
     private String at;
 
     /** Constructor without isDone */

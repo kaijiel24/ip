@@ -11,9 +11,7 @@ public class Ui {
     private final String BYE_LINE =
             "Bye. Hope to see you again soon!";
 
-    private final int MAX_LINE_LENGTH = 60;
-
-    private Scanner in;
+    private final Scanner in;
 
     /** Constructor */
     public Ui(){
