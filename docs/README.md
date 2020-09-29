@@ -43,11 +43,11 @@ Mark tasks which are already completed as **done** so that you can keep track of
 
 Exits Duke and ends the program.
 
-An Example of usage: 
+Example of usage: 
 
 `bye`
 
-The Expected outcome:
+Expected outcome:
 
 ```
 Bye. Hope to see you again soon!
@@ -59,11 +59,11 @@ Bye. Hope to see you again soon!
 
 Shows all the tasks that are currently in the list along with their completion status.
 
-An Example of usage: 
+Example of usage: 
 
 `list`
 
-The Expected outcome:
+Expected outcome:
 
 ```
 Here are the tasks in your list:
@@ -84,11 +84,11 @@ The list is empty so there are no tasks to be displayed.
 
 Adds a new todo task to the list with the given description.
 
-An Example of usage:
+Example of usage:
 
 `todo run`
 
-The Expected outcome:
+Expected outcome:
 ```
 Got it. I've added this task:
   [T][✘] run
@@ -107,10 +107,11 @@ The given _todo_ command does not follow the correct format.
 
 Adds a new Deadline task to the list with the given description and date/time
 
-An Example of usage:
+Example of usage:
+
 `deadline meeting preperation \by 30/09/2020 1000`
 
-The Expected outcome:
+Expected outcome:
 
 ```
 Got it. I've added this task:
@@ -130,10 +131,11 @@ The given _deadline_ command does not follow the correct format.
 
 Adds a new Event task to the list with the given description and date/time
 
-An Example of usage:
+Example of usage:
+
 `event CS2113 Tutorial /at 02/10/2020 1200`
 
-The Expected outcome:
+Expected outcome:
 ```
 Got it. I've added this task:
   [E][✘] CS2113 Tutorial  (at: 02/10/2020 1200)
@@ -152,10 +154,11 @@ The given _event_ command does not follow the correct format.
 
 Deletes a task from the list based on the given index of the task
 
-An Example of usage:
+Example of usage:
+
 `delete 3`
 
-The Expected outcome:
+Expected outcome:
 ```
 Noted. I've removed this task:
   [D][✓] CG submission  (by: Tues 2359)
@@ -179,10 +182,11 @@ The given index is out of the range and not within the number of tasks in the li
 
 Marks an undone task from the list as done
 
-An Example of usage:
+Example of usage:
+
 `done 5`
 
-The Expected outcome:
+Expected outcome:
 ```
 Nice! I've marked this task as done:
   [E][✓] CS2113 Tutorial  (at: 02/10/2020 1200)
@@ -210,10 +214,11 @@ The task at the given index has already been completed previously.
 
 Finds task from list whose description matches the search term
 
-An Example of usage:
+Example of usage:
+
 `find cs`
 
-The Expected outcome:
+Expected outcome:
 ```
 Here are the tasks in your list that contains 'cs'
 2. [E][✘] CS lecture  (at: Thurs 1200)
